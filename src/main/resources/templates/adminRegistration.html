@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nepali Cravings</title>
+<link rel="stylesheet" href="css/navbar.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+	<!----------------------------------START OF THE NAVIGATION BAR SECTION----------------------------------->
+	<section id="nav-bar">
+		<nav class="navbar navbar-expand-lg navbar-light">
+			<a class="navbar-brand" href="#"><img src="image/LOGO.png"></a>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/restaurantregistration}">RESTAURANT REGISTER</a></li>
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/registration}">REGISTER</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/login}">LOG
+							IN</a></li>
+				</ul>
+			</div>
+		</nav>
+	</section>
+	<!--------------------------------END OF THE NAVIGATION BAR SECTION----------------------------------->
+
+
+
+	<!----------------------START OF THE USER REGISTRATION SECTION------------------------>
+	<div class="container">
+		<h1>Registration</h1>
+		<form th:action="@{/adminregistration}" th:object="${admin}" method="post"
+			enctype="multipart/form-data">
+			<p class="error-message" th:if="${#fields.hasGlobalErrors()}"
+				th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation
+				error</p>
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('firstName')}? 'has-error':''">
+				<label for="firstName" class="control-label">First name</label> <input
+					id="firstName" class="form-control" th:field="*{firstName}" />
+				<p class="error-message"
+					th:each="error: ${#fields.errors('firstName')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('lastName')}? 'has-error':''">
+				<label for="lastName" class="control-label">Last name</label> <input
+					id="lastName" class="form-control" th:field="*{lastName}" />
+				<p class="error-message"
+					th:each="error : ${#fields.errors('lastName')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('userName')}? 'has-error':''">
+				<label for="userName" class="control-label">Username</label> <input
+					id="userName" class="form-control" th:field="*{userName}" />
+				<p class="error-message"
+					th:each="error : ${#fields.errors('userName')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('phone')}? 'has-error':''">
+				<label for="phone" class="control-label">Phone</label> <input
+					id="phone" class="form-control" th:field="*{phone}" />
+				<p class="error-message"
+					th:each="error : ${#fields.errors('phone')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('address')}? 'has-error':''">
+				<label for="address" class="control-label">address</label> <input
+					id="address" class="form-control" th:field="*{address}" />
+				<p class="error-message"
+					th:each="error : ${#fields.errors('address')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('image')}? 'has-error':''">
+				<label for="image" class="control-label">Image</label> <input
+					id="image" class="form-control" th:field="*{image}" type="file" />
+				<p class="error-message"
+					th:each="error : ${#fields.errors('image')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
+				<label for="email" class="control-label">E-mail</label> <input
+					id="email" class="form-control" th:field="*{email}" />
+				<p class="error-message"
+					th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('confirmEmail')}? 'has-error':''">
+				<label for="confirmEmail" class="control-label">Confirm
+					e-mail</label> <input id="confirmEmail" class="form-control"
+					th:field="*{confirmEmail}" />
+				<p class="error-message"
+					th:each="error : ${#fields.errors('confirmEmail')}"
+					th:text="${error}">Validation error</p>
+			</div>
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
+				<label for="password" class="control-label">Password</label> <input
+					id="password" class="form-control" type="password"
+					th:field="*{password}" />
+				<p class="error-message"
+					th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('confirmPassword')}? 'has-error':''">
+				<label for="confirmPassword" class="control-label">Confirm
+					password</label> <input id="confirmPassword" class="form-control"
+					type="password" th:field="*{confirmPassword}" />
+				<p class="error-message"
+					th:each="error : ${#fields.errors('confirmPassword')}"
+					th:text="${error}">Validation error</p>
+			</div>
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('terms')}? 'has-error':''">
+				<input id="terms" type="checkbox" th:field="*{terms}" /> <label
+					class="control-label" for="terms"> I agree with the <a
+					href="#">terms and conditions</a> for Registration.
+				</label>
+				<p class="error-message"
+					th:each="error : ${#fields.errors('terms')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-success">Register</button>
+				<span>Already registered? <a href="/" th:href="@{/login}">Login
+						here</a></span>
+			</div>
+		</form>
+	</div>
+
+	<!----------------------END OF THE USER REGISTRATION SECTION------------------------>
+
+
+	<!------------------------------START OF THE FOOTER SECTION---------------------------------------->
+	<section id="footer">
+		<div class="container text-right">
+			<p>
+				<i class="fa fa-copyright"></i> 2020 Nepali Cravings Pvt. Ltd. All
+				Rights Reserved.
+			</p>
+		</div>
+	</section>
+	<!------------------------------END OF THE FOOTER SECTION ------------------------------------>
+
+
+</body>
+</html>

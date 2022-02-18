@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nepali Cravings</title>
+<link rel="stylesheet" href="css/profile.css">
+<link rel="stylesheet" href="css/newnav.css">
+<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/cdnjs/sweetalert.min.css">
+<script src="/js/cdnjs/sweetalert.min.js"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+	<section id="nav-bar">
+		<div class="topnav" id="myTopnav">
+
+			<div id="lofo">
+				<a href="#"><img align="left" src="image/LOGO.png"></a>
+
+			</div>
+			<div id="newlists" class="newlist">
+				<div>
+					<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+						<i class="fa fa-bars"></i>
+					</a>
+				</div>
+				<div id="extranav">
+					<div class="navlist">
+						<a th:href="@{/restaurantindex}"><i class="fa fa-home"></i> Home</a> <a
+							th:href="@{/restorder}"><i
+							class="fa fa-fw fa-cart-arrow-down"></i> Orders</a> <a
+							th:href="@{/reviewsofrest}"><i
+							class="fa fa-fw fa-building"></i> Reviews</a> <a href=""
+							data-toggle="collapse" data-target="#list" id="lists"> <img
+							th:src="@{/restaurant/{id}(id=${restaurant.id})}"><i
+							class="fa fa-caret-down fa-2x"></i></a>
+					</div>
+					<div id="mai" align="right">
+						<ul id="list" class="collapse">
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/restProfile}"><i class="fa fa-fw fa-user"></i> Profile</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/logout}"><i class="fa fa-fw fa-sign-out"></i> Log
+									out</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="profileBody" class="responsive">
+		<div class="sad" id="sidenav">
+			<ul>
+				<li><a href="/restProfile"><i class="fa fa-fw fa-user"></i>
+						Profile</a></li>
+				<li><a href="#imagechange" data-toggle='modal'
+					data-target='#imagechange'><i class="fa fa-fw fa-image"></i>
+						Update image</a></li>
+				<li><a href="#myModal" data-toggle='modal'
+					data-target='#myModal'><i class="fa fa-fw fa-user"></i> Update
+						profile</a></li>
+				<li><a href="" data-toggle='modal'
+					data-target='#passwordchange'><i class="fa fa-fw fa-key"></i>
+						Update password</a></li>
+				<li><a href="/restaurantReviews"><i class="fa fa-star"></i>
+						Reviews</a></li>
+			</ul>
+		</div>
+
+		<!---------------------------START OF THE USER PROFILE SECTION---------------------------->
+		<div id="mainprofile" class="responsive">
+			<h3>Profile</h3>
+			<div id="profile">
+				<div id="profileimage">
+					<div align="center">
+						<a th:href="@{/restaurant/{id}(id=${restaurant.id})}"><img
+							class="responsive"
+							th:src="@{/restaurant/{id}(id=${restaurant.id})}"></a>
+					</div>
+					<div id="imgChangeButton" align="center">
+						<a href="" data-toggle='modal' data-target='#imagechange'><i
+							class="fa fa-fw fa-image"></i>Update</a>
+					</div>
+				</div>
+				<div id="resdet">
+					<label>Restaurant name: &nbsp; </label><span
+						th:text="${restaurant.rest_name}"></span><br> <label>Username: &nbsp;
+					</label><span th:text="${restaurant.userName}"></span><br> <label>Phone: &nbsp;
+					</label><span th:text="${restaurant.phone}"></span><br> <label>Address: &nbsp;
+					</label><span th:text="${restaurant.address}"></span><br> <label>Email: &nbsp;
+					</label><span th:text="${restaurant.email}"></span><br>
+					<button data-toggle='modal' data-target='#myModal'
+						class="btn btn-primary">Update</button>
+				</div>
+			</div>
+		</div>
+		<!---------------------------END OF THE USER PROFILE SECTION---------------------------->
+	</section>
+	<!------------------------------START OF THE FOOTER SECTION---------------------------------------->
+	<section id="footer">
+			<p>
+				<i class="fa fa-copyright"></i> 2021 Nepali Cravings Pvt. Ltd. All
+				Rights Reserved.
+			</p>
+	</section>
+	<!------------------------------END OF THE FOOTER SECTION------------------------------------>
+
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						<i class="fa fa-fw fa-user"></i> Update profile
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form th:action="@{/changeProfileRestaurant}" th:object="${rest}"
+					method="post" enctype="multipart/form-data" id="profupdate">
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="rest_name" class="control-label">First name</label> <input
+								id="rest_name" class="form-control" th:field="*{rest_name}" />
+						</div>
+						<div class="form-group">
+							<label for="userName" class="control-label">Username</label> <input
+								id="userName" class="form-control" th:field="*{userName}" />
+						</div>
+						<div class="form-group">
+							<label for="phone" class="control-label">Phone</label> <input
+								id="phone" class="form-control" th:field="*{phone}" />
+						</div>
+						<div class="form-group">
+							<label for="address" class="control-label">address</label> <input
+								id="address" class="form-control" th:field="*{address}" />
+						</div>
+						<div class="form-group">
+							<label for="email" class="control-label">E-mail</label> <input
+								id="email" class="form-control" th:field="*{email}" />
+						</div>
+						<div class="form-group">
+							<label for="email" class="control-label"> Confirm E-mail</label>
+							<input id="confirmemail" class="form-control" />
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">Save update</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="imagechange" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						<i class="fa fa-fw fa-image"></i> Update Image
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form th:action="@{/restaurantimagechange}" method="post"
+					enctype="multipart/form-data" id="imageupdate">
+					<div class="modal-body">
+					<div>
+						<label>Photos: </label> <input id="image" class="form-control-plaintext"
+							name="image" type="file" />
+							<p class="error-message" th:if=${empty} th:text="${empty}">Validation error</p>
+					</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary" id="imgup">Save update</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="passwordchange" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						<i class="fa fa-fw fa-key"></i> Update Password
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form th:action="@{/changePasswordRestaurant}" th:object="${rest}"
+					method="post" id="passUpdate">
+					<div class="modal-body">
+					<div class="form-group">
+						<label for="password" class="control-label">Password</label> <input
+							id="password" class="form-control" type="password"
+							th:field="*{password}" />
+					</div>
+					
+					<div class="form-group">
+						<label for="Password" class="control-label">Confirm
+							password</label> <input id="confirmPassword" class="form-control"
+							type="password" th:field="*{Password}" />
+
+					</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">Save update</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+		$(document).on('submit', '#profupdate', function(e) {
+			e.preventDefault();
+			console.log("pig");
+			const csrf = $(this).find('input[name="_csrf"]').val();
+			$.ajax({
+				type : 'POST',
+				url : '/changeProfileRestaurant',
+				headers : {
+					'csrf-token' : csrf
+				},
+				data : $(this).serializeArray(),
+				cache : false,
+				success : function(data) {
+					console.log("pig");
+					$('#myModal').hide();
+					swal({
+						title : "Successful!",
+						text : "Profile Update Successful!",
+						icon : "success",
+					})
+				},
+				error : function(data) {
+					$('#myModal').hide();
+					swal({
+						title : "Error!",
+						text : "Error In Profile Update!",
+						icon : "error",
+					})
+				}
+			});
+
+		});
+		$(document).on('submit', '#passUpdate', function(e) {
+			e.preventDefault();
+			const csrf = $(this).find('input[name="_csrf"]').val();
+			$.ajax({
+				type : 'POST',
+				url : '/changePasswordRestaurant',
+				headers : {
+					'csrf-token' : csrf
+				},
+				data : $(this).serializeArray(),
+				cache : false,
+				success : function(data) {
+					$('#passwordchange').hide();
+					swal({
+						title : "Successful!",
+						text : "Password Update Successful!",
+						icon : "success",
+					}).then(function() {
+						window.location = "/logout";
+					});
+
+				},
+				error : function(data) {
+					$('#passwordchange').hide();
+					swal({
+						title : "Error!",
+						text : "Error In Password Update!",
+						icon : "error",
+					}).then(function() {
+						window.location = "/restProfile";
+					});
+				}
+			});
+		});
+		/* $(document).on('submit', '#imageupdate', function(e) {
+			//e.preventDefault();
+			//const csrf= $(this).find('input[name="_csrf"]').val();
+			//var formData = new FormData($("#image"));
+			var idata = $(this).find('input[name="image"]')
+			var udrl = '/restaurantimagechange';
+			//console.log(data)
+			//formData.append('image', $('input[type=file]').files);
+			$.ajax({
+				method : 'post',
+				type : 'POST',
+				cache : false,
+				processData : false,
+				url : udrl,
+				data : $(this),
+				success : function(data) {
+					$('#imagechange').hide();
+					swal({
+						title : "Successful!",
+						text : "Image Update Successful!",
+						icon : "success",
+					}).then(function() {
+						window.location = "/restProfile";
+					});
+
+				},
+				error : function(data) {
+					$('#imagechange').hide();
+					console.log("big")
+					swal({
+						title : "Error!",
+						text : "Error In image Update!",
+						icon : "error",
+					}).then(function() {
+						window.location = "/restProfile";
+					});
+				}
+			});
+
+		}); */
+		$(document).ready(function() {
+
+			$('#newlist').hide();
+			$('#lists').on('hover', function() {
+				$('#newlist').show();
+			});
+
+		});
+	
+	</script>
+	<script th:if="${success}">
+		$(function() {
+			swal({
+				title : "Successful!",
+				text : "Image Update Successful!",
+				icon : "success",
+			})
+		});
+	</script>
+	<script th:if="${error}">
+		$(function() {
+			swal({
+				title : "Error!",
+				text : "Error In image Update!",
+				icon : "error",
+			})
+		});
+	</script>
+	<script th:if="${empty}">
+		$(function() {
+			swal({
+				title : "Error!",
+				text : "Error image cannot be empty",
+				icon : "error",
+			}).then(function() {
+				window.location = "/restProfile";
+			});
+		});
+	</script>
+
+	<script>
+		function myFunction() {
+			var x = document.getElementById("myTopnav");
+			var s = document.getElementById("newlists");
+			if (s.className === "newlist") {
+				s.className += " responsive";
+
+			} else {
+				x.className = "topnav";
+				s.className = "newlist"
+			}
+		}
+		/* $(document).ready(function(){
+		
+		 $('#mai').hide();
+		 $('#lists').on('click', function() {
+		 $('#mai').toggle();
+		 });
+		
+		 }); */
+	</script>
+</body>
+</html>

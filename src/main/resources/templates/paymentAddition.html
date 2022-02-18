@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Nepali Cravings</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/newnav.css">
+
+<!------- Poppins Font ------->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;0,800;0,900;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+	<!----------------------------------START OF THE NAVIGATION BAR SECTION----------------------------------->
+	<section id="nav-bar">
+		<div class="topnav" id="myTopnav">
+			<div id="lofo">
+				<a href="#"><img align="left" src="image/LOGO.png"></a>
+			</div>
+			<div id="newlists" class="newlist">
+				<div>
+					<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+						<i class="fa fa-bars"></i>
+					</a>
+				</div>
+				<div id="extranav">
+					<div class="navlist">
+						<a th:href="@{/adminindex}"><i class="fa fa-home"></i> Home</a> <a th:href="@{/adminuser}"><i
+							class="fa fa-fw fa-user"></i> Users</a> 
+						<a href="" data-toggle="collapse" data-target="#list" id="lists">
+							<img th:src="@{/admin/{id}(id=${admins.id})}"><i
+							class="fa fa-caret-down fa-2x"></i>
+						</a>
+					</div>
+					<div id="mai" align="right">
+						<ul id="list" class="collapse">
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/adminProfile}"><i class="fa fa-fw fa-user"></i> Profile</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/logout}"><i class="fa fa-fw fa-sign-out"></i> Log
+									out</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!---------------------------------END OF THE NAVIGATION BAR SECTION----------------------------------->
+	
+	<div id="paymentadd">
+	<h1 style="font-family: poppins; font-size: 2.2rem; font-weight: 500; background-color: grey; color: white; padding: 10px 20px; text-align: center; margin-left: 9px;">Add Payment Methods</h1>
+	<form method="post" th:action="@{/addingPayment}" th:object="${payment}">
+	<div class="form-group" style="margin-top: 45px;"
+		th:classappend="${#fields.hasErrors('paymentMethod')}? 'has-error':''">
+		 <input id="paymentMethod" class="form-control" style="width: 50%; margin-left: 9px;" th:field="*{paymentMethod}"
+			placeholder="Add Payment Method" required="required" />
+		<p class="error-message"
+			th:each="error: ${#fields.errors('paymentMethod')}" th:text="${error}">Validation
+			error</p>
+	</div>
+	<button type="submit" class="btn btn-primary" style="margin-left: 9px;">Save
+												</button>
+	
+	</form>
+
+
+</body>
+</html>

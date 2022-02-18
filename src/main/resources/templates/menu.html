@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nepali Cravings</title>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/newnav.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/profile.css">
+
+<!------- Poppins Font ------->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;0,800;0,900;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+
+
+	<!----------------------------------START OF THE NAVIGATION BAR SECTION----------------------------------->
+	<section id="nav-bar">
+		<div class="topnav" id="myTopnav">
+			<div id="lofo">
+				<a href="#"><img align="left" src="../image/LOGO.png"></a>
+			</div>
+			<div id="newlists" class="newlist">
+				<div>
+					<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+						<i class="fa fa-bars"></i>
+					</a>
+				</div>
+				<div>
+					<div class="navlist">
+						<a th:href="@{/userindex}"><i class="fa fa-home"></i> Home</a> <a th:href="@{/userorders}"><i
+							class="fa fa-fw fa-cart-arrow-down"></i> My Orders</a> <a
+							th:href="@{/selectrest}" class="active"><i
+							class="fa fa-fw fa-building"></i> Restaurants</a> <a
+							href="/selectforReview"><i class="fa fa-star"></i> Reviews</a> <a
+							href="" data-toggle="collapse" data-target="#list" id="lists">
+							<img th:src="@{/user/{id}(id=${user.id})}"><i
+							class="fa fa-caret-down fa-2x"></i>
+						</a>
+
+					</div>
+					<div id="mai" align="right">
+						<ul id="list" class="collapse">
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/userProfile}"><i class="fa fa-fw fa-user"></i>Profile</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/usercart}"><i class="fa fa-fw fa-shopping-cart"></i>My
+									cart</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/logout}"><i class="fa fa-fw fa-sign-out"></i>Log
+									out</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	
+	<!--------------------------------FOOD MENU SECTION----------------------------------->
+	
+	<section style=" display: flex; justify-content: center; align-items: center; flex-direction: column; width: 100%; font-family: poppins; margin-top: 100px;" id="rests">
+  <h1 style="font-size: 2.2rem; font-weight: 500; background-color: black; color: white; padding: 10px 20px;">AVAILABLE ITEMS</h1>
+	</section>
+			<!-- <div class="sad" id="sidenav">
+				<ul th:each="subCata : ${subCatagory}">
+					<li><a href="/userProfile">
+							<span th:text="${subCata.subCatagoryName}"></span> </a></li>
+				</ul>
+			</div> -->
+			<section style=" display: flex;">
+			<div id="price" th:if="${!subs.empty}">
+				<div class="contain" id="subss" style="margin-left: 45px; margin-left: 15px;">
+					<h3 align="center">Price Plan</h3>
+					<div class="row" th:each="subsc : ${subs}">
+						<form th:action="@{/subscribe/{id}(id=${subsc.getId()})}" method="POST">
+							<input type="hidden" th:value="${subsc.getId()}" class="res" /> 
+							<div class="single-price">
+								<div class="price-head">
+									<h2>Discount Plan</h2>
+									<p>
+										<span th:text="${subsc.rate}"></span>%
+									</p>
+									<p>
+										Rs. <span th:text="${subsc.subprice}"></span>/month
+									</p>
+								</div>
+								<div class="price-button" id="pbutton" th:attrappend="id=${subsc.getId()}">
+									
+									<button id="suscribing" type="button"  class="btn btn-primary" th:attrappend="id=${subsc.getId()}"
+								>Subscribe</button>
+							<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+								th:attrappend="id=${subsc.getId()}"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content" id="contents">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Subscribe</h5>
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<div class="price-head">
+									<h2>Discount Plan</h2>
+									<p>
+										<span th:text="${subsc.rate}"></span>%
+									</p>
+									<p>
+										Rs. <span th:text="${subsc.subprice}"></span>/month
+									</p>
+								</div>
+										</div>
+										<div class="modal-footer">
+											<script src="https://checkout.stripe.com/checkout.js"
+										class="stripe-button"
+										data-key="pk_test_51J6cE8IG0AWYDz2b0EPbg06E6IVqxuEFdxICAfewONoMoKBDyPbkDB3FyN8gEIIUaXoQbpm6kSn8pk8v9o2wgltz00a8OB1K16"
+										data-name="nepali cravings"
+										data-description="payment of order"
+										th:data-amount="${subsc.subprice}" data-currency="usd">
+										</script>
+											<button type="button" class="btn btn-secondary"
+												data-dismiss="modal">Cancel</button>
+										</div>
+
+									</div>
+								</div>
+							</div>
+									<div th:if="${subscriber!=null}" class="modal fade" id="alreadysubscribed" tabindex="-1"
+								role="dialog" th:attrappend="id=${subsc.id}"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content" id="contents">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">
+												<i class="fa fa-fw fa-warning"></i>Subscribe
+											</h5>
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<i class="fa fa-fw fa-warning fa-4x" id="warn"></i> 
+											<label>You have already subscribed.</label>
+											<div class="price-head">
+									<h2>Discount Plan</h2>
+									<p>
+										<span th:text="${subscriber.subscription.rate}"></span>%
+									</p>
+									<p>
+										Rs. <span th:text="${subscriber.subscription.subprice}"></span>/month
+									</p>
+								</div>
+										</div>
+										<div class="modal-footer">
+											<button
+													type="button" class="btn btn-primary" data-dismiss="modal">ok</button>
+										</div>
+
+									</div>
+								</div>
+							</div><button type="button" class="btn btn-primary" id="subscription" 
+									th:attrappend="id=${subsc.getId()}">Subscribed</button>
+
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+
+			</div>
+
+			<!-------------------------------------START OF THE LIST OF FOOD SECTION--------------------------------------->
+			<section style="margin-top: 25px;">
+			<div class="containers responsive" id="foodcont">	
+				<div class="dash" id="dash">
+				<div class="row" style="margin-left: 25px;">
+					<div class=card id=card th:each="foo : ${foods}">
+						<div id=con>
+							<h4 class=rhead id=head th:text="${foo.getFoodName()}"
+								align="center">"+name+"</h4>
+							<img th:src="@{/food/{id}(id=${foo.getId()})}"> <label
+								id="menuPrice">Price: <span th:text="${foo.getPrice()}"></span></label>
+						</div>
+						<form th:action="@{/savetocart/{id}(id=${foo.getId()})}"
+							th:object="${cart}" method="post" id="formid">
+							<div id="formdiv">
+								<label id="quan">Quantity:</label><input type="number"
+									name="quantity" id="quantity" value="1" style="width: 20%;"/>
+							</div>
+							<button id="save" type="button" data-toggle='modal'
+								data-target='#myModal' class="btn btn-primary"
+								th:attrappend="data-target=${foo.getId()}">Add to Cart</button>
+							<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+								th:attrappend="id=${foo.getId()}"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content" id="contents">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Adding to
+												cart</h5>
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<label>Do you want to add <span
+												th:text="${foo.getFoodName()}"></span> in cart???
+											</label>
+										</div>
+										<div class="modal-footer">
+											<button type="submit" class="btn btn-primary">Add</button>
+											<button type="button" class="btn btn-secondary"
+												data-dismiss="modal">Cancel</button>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+
+		</section>
+			</section>
+		<!--------------------------------END OF THE LIST OF FOOD SECTION----------------------------------->
+
+
+		<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content" id="contents">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">
+							<i class="fa fa-fw fa-check-circle"></i>Successfull!!!
+						</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<i class="fa fa-fw fa-check-circle fa-4x" id="warn"></i> <label
+							th:text="${foodOrdered}"></label>
+					</div>
+
+					<div class="modal-footer">
+
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">ok</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade" id="myModal3" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content" id="contents">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">
+							<i class="fa fa-fw fa-warning"></i>ERROR!!!
+						</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<i class="fa fa-fw fa-warning fa-4x" id="warn"></i> <label
+							th:text="${notOrderd}"></label>
+					</div>
+
+					<div class="modal-footer">
+
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">ok</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!------------------------------START OF THE FOOTER SECTION---------------------------------------->
+		<footer class="page-footer font-small" id="footer">
+				<p>
+					<i class="fa fa-copyright"></i> 2021 Nepali Cravings Pvt. Ltd. All
+					Rights Reserved.
+				</p>
+		</footer>
+		<!------------------------------END OF THE FOOTER SECTION------------------------------------>
+	</section>
+	<script th:if="${foodOrdered}">
+		$(function() {
+			$('#myModal2').modal('show');
+		});
+	</script>
+	<script th:if="${notOrdered}">
+		$(function() {
+			$('#myModal3').modal('show');
+		});
+		
+	</script>
+	
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	var stripePublicKey=/*[[${stripePublicKey}]]*/;
+	
+/*]]>*/
+ 
+ /*<![CDATA[*/
+	var subscriber=/*[[${subscriber}]]*/;
+	
+/*]]>*/
+ $(document).ready(function() {
+	//$('.price-button').find('button[type="button"]').hide();
+	$("input[class=res]").each(function() {
+		var id = $(this).attr("value");
+		$('#subscription'+id).hide();
+	if(subscriber==null){
+		console.log(id)
+		$('#suscribing'+id).show();
+		
+		$('#suscribing'+id).on('click',function(){
+			$('#myModal'+id).modal('show');
+		})
+		
+	}
+	if(subscriber!=null){
+		console.log(subscriber.subscription.id)
+		$('#suscribing'+subscriber.subscription.id).hide();
+		$('#subscription'+subscriber.subscription.id).show();
+		 $('#subscription'+subscriber.subscription.id).prop('disabled', true);
+		$('#suscribing'+id).on('click',function(){
+			$('#alreadysubscribed'+id).modal('show');
+		})
+	
+	}
+	})
+ });
+		function myFunction() {
+			var x = document.getElementById("myTopnav");
+			var s = document.getElementById("newlists");
+			if (s.className === "newlist") {
+				s.className += " responsive";
+
+			} else {
+				x.className = "topnav";
+				s.className = "newlist"
+			}
+		}
+		//var stripe = Stripe(stripePublicKey);
+		//var checkoutButton = document.getElementById('checkout-button');
+		//checkoutButton.addEventListener('click', function() {
+		 // stripe.redirectToCheckout({
+		    // Make the id field from the Checkout Session creation API response
+		    // available to this file, so you can provide it as argument here
+		    // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+		 //sessionId: '{{CHECKOUT_SESSION_ID}}'
+		//  }).then(function (result) {
+		    // If `redirectToCheckout` fails due to a browser or network
+		    // error, display the localized error message to your customer
+		    // using `result.error.message`.
+		//  });
+		//});
+	</script>
+	<!-- <script th:inline="javascript" th:if="${subscriber!=null}">
+	/*<![CDATA[*/
+	var subscriber=/*[[${subscriber}]]*/;
+	
+/*]]>*/
+	 $(document).ready(function(){
+ 
+ 	$('script').each(function() {
+
+ 		if (this.src === 'https://checkout.stripe.com/checkout.js') {
+				console.log(subscriber.subscription.id)
+ 	          this.parentNode.removeChild( this );
+ 	          $('#suscribing'+subscriber.subscription.id).hide();
+ 	         $('#subscription'+subscriber.subscription.id).show();
+ 	        $('#subscription'+subscriber.subscription.id).prop('disabled', true);
+ 	        }
+    });
+ 	//$('.price-button').find('input[type="button"]').hide();
+
+ });
+	</script> -->
+
+</body>
+</html>

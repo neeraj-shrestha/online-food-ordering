@@ -1,0 +1,204 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#lofo img{
+  height: 70px;
+  width: 70px;
+  border-radius: 20px;
+}
+#lofo a{
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+#nav-bar{
+
+}
+/* #lists:hover #list{
+	display: block;
+} */
+.topnav {
+	height:15%;
+	overflow: hidden;
+	background-color: #393959;
+	text-align: right;
+	display: flex;
+  }
+
+.topnav a {
+	border-radius: 10px;
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover ,.topnav a.active {
+	background-color: black;
+	color: white;
+	 text-decoration: none;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+.mytopnav {
+	height:15%;
+	overflow: hidden;
+	background-color: white;
+	text-align: right;
+	display: flex;
+  }
+
+.mytopnav a {
+	border-radius: 10px;
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.mytopnav a:hover ,.mytopnav a.active {
+	 text-decoration: none;
+}
+
+
+.mytopnav .icon {
+  display: none;
+}
+
+
+.mytopnav2 {
+	height:15%;
+	overflow: hidden;
+	background-color: #222;
+	text-align: right;
+	display: flex;
+  }
+
+.mytopnav2 a {
+	border-radius: 10px;
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.mytopnav2 a:hover ,.mytopnav2 a.active {
+	background-color: #000;
+	color: white;
+	 text-decoration: none;
+}
+
+.mytopnav2 .icon {
+  display: none;
+}
+
+
+#lofo{
+   height: 100px;
+}
+.newlist{
+  margin-left: auto;
+  margin-top: 0px;
+  display: flex;
+  align-self: right;
+  text-align: center;
+}
+.newlist a{
+	 margin-top: 20px;
+}
+.newlist img{
+	 border-radius: 50%;
+  width:40px;
+  height: 40px;
+	
+}
+
+@media screen and (max-width: 700px) {
+  .topnav .navlist{display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    /*display: block;*/
+    margin-top: 10px;
+    text-align: right;
+  }
+}
+@media screen and (max-width: 700px) {
+  .newlist.responsive {position: relative;
+    display: block;
+    height:100%;
+    }
+    .newlist.responsive .navlist{
+      display: block;
+      margin-top: 50px;
+    }
+  .newlist.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .newlist.responsive a {
+    float: none;
+    display: block;
+    margin-top: 10px;
+    text-align: right;
+  }
+}
+
+#list{
+	background-color: #111;
+	width:125px;
+  overflow-x: hidden; /* Disable horizontal scroll */
+margin-top:0px;
+  transition: 0.5s;
+}
+
+#mai>ul>li>a{
+	display: block;
+	padding-right:10px;
+    text-decoration: none;
+    color: #f2f2f2;
+    argin-left: 10px;
+}
+#mai>ul {
+    padding: 0;
+    list-style-type: none;
+      
+}
+#mai li{
+	text-align: center;
+}
+#list li a:hover,
+    #list li a:focus {
+     text-decoration: none;
+        outline: none;
+        background-color: #ddd !important;
+        color: black
+    }
+#mai:hover #list{
+    visibility:visible;
+}

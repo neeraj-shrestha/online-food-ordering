@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Nepali Cravings</title>
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/newnav.css">
+<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/review.css">
+<link rel="stylesheet"
+	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.9/css/star-rating.min.css"
+	rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/font-awesome.min.css">
+	<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.9/js/star-rating.min.js"></script>
+</head>
+<body>
+	<section id="nav-bar">
+		<div class="topnav" id="myTopnav">
+
+			<div id="lofo">
+				<a href="#"><img align="left" src="image/LOGO.png"></a>
+
+			</div>
+			<div id="newlists" class="newlist">
+				<div>
+					<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+						<i class="fa fa-bars"></i>
+					</a>
+				</div>
+				<div id="extranav">
+					<div class="navlist">
+						<a th:href="@{/restaurantindex}"><i class="fa fa-home"></i> Home</a> <a
+							th:href="@{/restorder}"><i
+							class="fa fa-fw fa-cart-arrow-down"></i> Orders</a> <a
+							th:href="@{/reviewsofrest}"><i class="fa fa-fw fa-building"></i> Reviews</a>
+						<a href="" data-toggle="collapse" data-target="#list" id="lists">
+							<img th:src="@{/restaurant/{id}(id=${restaurant.id})}"><i
+							class="fa fa-caret-down fa-2x"></i>
+						</a>
+					</div>
+					<div id="mai" align="right">
+						<ul id="list" class="collapse">
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/restProfile}"><i class="fa fa-fw fa-user"></i> Profile</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Log
+									out</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header" style="color: grey;">
+					Welcome
+				</h1>
+			</div>
+			<div class="col-lg-3 col-md-6">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<div class="row" id="dashitem">
+							<div class="col-xs-3">
+								<i class="fa fa-hamburger fa-5x"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class='huge' th:text="${foods.size}"></div>
+
+								<div>Items</div>
+							</div>
+						</div>
+					</div>
+					<a href="/restfood"> <th:div class="panel-footer">
+							<span class="pull-left">View Details</span>
+							<span class="pull-right"><i
+								class="fa fa-arrow-circle-right"></i></span>
+							<div class="clearfix"></div>
+						</th:div>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6">
+				<div class="panel panel-red">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-cart-arrow-down fa-5x"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class='huge' th:text="${orders.size}"></div>
+
+								<div>Orders</div>
+							</div>
+						</div>
+					</div>
+					<a href="/restorder"> <th:div class="panel-footer">
+							<span class="pull-left">View Details</span>
+							<span class="pull-right"><i
+								class="fa fa-arrow-circle-right"></i></span>
+							<div class="clearfix"></div>
+						</th:div>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6">
+				<div class="panel panel-yellow">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-star fa-5x"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class='huge' th:text="${reviews.size}"></div>
+								<div>Reviews</div>
+							</div>
+						</div>
+					</div>
+					<a href="/reviewsofrest"> <th:div class="panel-footer">
+							<span class="pull-left">View Details</span>
+							<span class="pull-right"><i
+								class="fa fa-arrow-circle-right"></i></span>
+							<div class="clearfix"></div>
+						</th:div>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6">
+				<div class="panel panel-brown">
+
+					<div class="panel-heading">
+						<a href="/restProfile"> <th:div class="row">
+								<div class="col-xs-3">
+									<i class="fa fa-user fa-5x"></i>
+								</div>
+								<div class="col-xs-9 text-right" style="padding: 20px;">
+									<!-- <div class='huge' th:text="${reviews.size}"></div> -->
+									<div>Profile</div>
+								</div>
+							</th:div>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6">
+				<div class="panel panel-brown">
+
+					<div class="panel-heading" id="panhead">
+						<a href="/savingfood"> <th:div class="row">
+								<div class="col-xs-3">
+									<i class="fa fa-hamburger fa-5x"></i>
+								</div>
+								<div class="col-xs-9 text-right" style="padding: 20px;">
+									<!-- <div class='huge' th:text="${reviews.size}"></div> -->
+									<div>Add foods</div>
+								</div>
+							</th:div>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6">
+				<div class="panel panel-brown">
+
+					<div class="panel-heading">
+						<a href="/paymentrest"> <th:div class="row">
+								<div align="center" style="display: block; padding-left: 40px;">
+									<i class="fa fa-money fa-5x"></i>
+								</div>
+								<div class="col-xs-9" align="center" style="padding: 20px;">
+									<!-- <div class='huge' th:text="${reviews.size}"></div> -->
+									<div>Add Payment Method</div>
+								</div>
+							</th:div>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6">
+				<div class="panel panel-brown">
+
+					<div class="panel-heading">
+						<a href="/subscriptionAddition"> <th:div class="row">
+								<div align="center" style="display: block; padding-left: 40px;">
+									<i class="fa fa-percent fa-5x" aria-hidden="true"></i>
+								</div>
+								<div class="col-xs-9" align="center" style="padding: 20px;">
+									<div> Add Discount plan</div>
+								</div>
+							</th:div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<section id="contact">
+		<div class="container">
+		<h3 style="font-family: montserrat;"><b>Review the website</b></h3>
+			<div class="row">
+				<div class="col-md-6" id="cont">
+					<form class="contact-form" th:action="@{/messagefromrest}" th:object="${messages}" method="post">
+						<div class="form-group">
+							<input value="0" type="hidden" class="rating"
+									th:field="*{starsweb}" name="stars">
+						</div>
+						<div class="form-group">
+							<input type="email" class="form-control" placeholder="Email ID"
+								required="required" style="font-size: small; padding: 1.5%;">
+						</div>
+						<div class="form-group">
+							<textarea rows="4" class="form-control"  th:field="*{messagefor}"
+								placeholder="Your Message" required="required" style="font-size: small; padding: 1.5%;">
+							</textarea>
+						</div>
+						<input type="submit" class="btn btn-primary" value="Review"
+							name="msg" style="font-size: small; padding: 1.5%;">
+					</form>
+				</div>
+				<div class="col-md-6 contact-info">
+					<div class="follow">
+						<b>Address:</b><i class="fa fa-map-marker"></i> Tinkune
+					</div>
+					<div class="follow">
+						<b>Phone:</b><i class="fa fa-phone"></i>+977-9840791702
+					</div>
+					<div class="follow">
+						<b>Email:</b><i class="fa fa-envelope"></i>cravingsnepali@gmail.com
+					</div>
+					<div class="follow">
+						<label><b>Get Social:</b></label> &nbsp; <a href="www.facebook.com"><i
+							class="fab fa-facebook"></i></a> &nbsp; <a href="www.twitter.com"><i
+							class="fab fa-twitter"></i></a> &nbsp; <a href="https://www.instagram.com/nepalicravings/"><i
+							class="fab fa-instagram"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<!------------------------------START OF THE FOOTER SECTION---------------------------------------->
+	<section id="footer">
+			<p>
+				<i class="fa fa-copyright"></i> 2021 Nepali Cravings Pvt. Ltd. All
+				Rights Reserved.
+			</p>
+	</section>
+	<!------------------------------END OF THE FOOTER SECTION------------------------------------>
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			$('#newlist').hide();
+			$('#lists').on('click', function() {
+				$('#newlist').show();
+			});
+
+		});
+	</script>
+
+	<script>
+		function myFunction() {
+			var x = document.getElementById("myTopnav");
+			var s = document.getElementById("newlists");
+			if (s.className === "newlist") {
+				s.className += " responsive";
+
+			} else {
+				x.className = "topnav";
+				s.className = "newlist"
+			}
+		}
+		/* $(document).ready(function(){
+		
+		 $('#mai').hide();
+		 $('#lists').on('click', function() {
+		 $('#mai').toggle();
+		 });
+		
+		 }); */
+	</script>
+</body>
+</html>

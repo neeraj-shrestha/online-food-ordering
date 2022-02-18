@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nepali Cravings</title>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/newnav.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/profile.css">
+
+<!------- Poppins Font ------->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;0,800;0,900;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+
+	<!----------------------------------START OF THE NAVIGATION BAR SECTION----------------------------------->
+	<section id="nav-bar">
+		<div class="topnav" id="myTopnav">
+			<div id="lofo">
+				<a href="#"><img align="left" src="image/LOGO.png"></a>
+			</div>
+			<div id="newlists" class="newlist">
+				<div>
+					<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+						<i class="fa fa-bars"></i>
+					</a>
+				</div>
+				<div id="extranav">
+					<div class="navlist">
+						<a th:href="@{/restaurantindex}"><i class="fa fa-home"></i> Home</a> <a
+							th:href="@{/restorder}"><i
+							class="fa fa-fw fa-cart-arrow-down"></i> Orders</a> <a
+							th:href="@{/reviewsofrest}"><i class="fa fa-fw fa-building"></i> Reviews</a>
+						<a href="" data-toggle="collapse" data-target="#list" id="lists">
+							<img th:src="@{/restaurant/{id}(id=${restaurant.id})}"><i
+							class="fa fa-caret-down fa-2x"></i>
+						</a>
+					</div>
+					<div id="mai" align="right">
+						<ul id="list" class="collapse">
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/restProfile}"><i class="fa fa-fw fa-user"></i> Profile</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/logout}"><i class="fa fa-fw fa-sign-out"></i> Log
+									out</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--------------------------------END OF THE NAVIGATION BAR SECTION----------------------------------->
+
+<div id="paymentadd">
+	<h1 style="font-family: poppins; font-size: 2.2rem; font-weight: 500; background-color: grey; color: white; padding: 10px 20px; text-align: center; margin-left: 9px;">Add Discount Plans</h1>
+		
+
+	<form method="post" th:action="@{/addingSubscription}" th:object="${subscription}">
+		<div class="form-group" style="margin-top: 45px; margin-left: 9px;">
+			<label class="control-label">Discount Rate</label> 
+			<input id="rate" class="form-control"
+				th:field="*{rate}" placeholder="Discount rate"
+				required="required" />
+			<label class="control-label" style="margin-top: 25px;">Price for subscription</label> 
+				<input id="resprice" class="form-control"
+				th:field="*{subprice}" placeholder="Subscription price"
+				required="required" />
+		</div>
+		<button type="submit" class="btn btn-primary" style="margin-left: 9px;">Save</button>
+
+	</form>
+
+
+
+
+
+	<!------------------------------START OF THE FOOTER SECTION---------------------------------------->
+	<footer id="footer">
+			<p>
+				<i class="fa fa-copyright"></i> 2021 Nepali Cravings Pvt. Ltd. All
+				Rights Reserved.
+			</p>
+	</footer>
+	<!------------------------------END OF THE FOOTER SECTION------------------------------------>
+
+
+	<script>
+		function myFunction() {
+			var x = document.getElementById("myTopnav");
+			var s = document.getElementById("newlists");
+			if (s.className === "newlist") {
+				s.className += " responsive";
+
+			} else {
+				x.className = "topnav";
+				s.className = "newlist"
+			}
+		}
+	</script>
+</body>
+</html>

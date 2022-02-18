@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nepali Cravings</title>
+<link rel="stylesheet" href="css/newnav.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="css/style.css">
+
+<!------- Poppins Font ------->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;0,800;0,900;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+</head>
+<body>
+
+	<!----------------------------------START OF THE NAVIGATION BAR SECTION----------------------------------->
+	<section id="nav-bar">
+		<div class="topnav" id="myTopnav">
+
+			<div id="lofo">
+				<a href="#"><img align="left" src="image/LOGO.png"></a>
+
+			</div>
+			<div id="newlists" class="newlist">
+				<div>
+					<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+						<i class="fa fa-bars"></i>
+					</a>
+				</div>
+				<div id="extranav">
+					<div class="navlist">
+						<a th:href="@{/}"><i class="fa fa-home"></i> Home</a> <a class="nav-link"
+						th:href="@{/restaurantregistration}"><i class="fa fa-fw fa-building"></i> Restaurant register</a>
+					<a class="nav-link"
+						th:href="@{/registration}"><i class="fas fa-user-plus"></i> Signup</a>
+					<a class="nav-link" th:href="@{/login}"><i class="fas fa-sign-in-alt"></i> Login</a> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--------------------------------END OF THE NAVIGATION BAR SECTION----------------------------------->
+
+
+
+	<!----------------------START OF THE USER REGISTRATION SECTION------------------------>
+	<div class="container">
+		<div th:if="${param.success}">
+			<div class="alert alert-info">You've successfully registered to
+				our awesome app!</div>
+		</div>
+		
+		<section id="foodsaving">
+		<h3 align="center">REGISTER</h3>
+		<form th:action="@{/registration}" th:object="${user}" method="post"
+			enctype="multipart/form-data">
+			<p class="error-message" th:if="${#fields.hasGlobalErrors()}"
+				th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation
+				error</p>
+			<div class="form-row">
+			<div class="form-group col-md-6"
+				th:classappend="${#fields.hasErrors('firstName')}? 'has-error':''">
+				<label for="firstName" class="control-label">First Name</label> <input
+					id="firstName" class="form-control" th:field="*{firstName}" placeholder="First Name"/>
+				<p class="error-message"
+					th:each="error: ${#fields.errors('firstName')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="form-group col-md-6"
+				th:classappend="${#fields.hasErrors('lastName')}? 'has-error':''">
+				<label for="lastName" class="control-label">Last Name</label> <input
+					id="lastName" class="form-control" th:field="*{lastName}" placeholder="Last Name"/>
+				<p class="error-message"
+					th:each="error : ${#fields.errors('lastName')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			</div>
+			<div class="row">
+			<div class="col-md-4"
+				th:classappend="${#fields.hasErrors('userName')}? 'has-error':''">
+				<label for="userName" class="control-label">Username</label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupPrepend2">@</span>
+        </div> 
+				<input id="userName" class="form-control" th:field="*{userName}" placeholder="Username" aria-describedby="inputGroupPrepend2"/>
+				</div>	
+				<p class="error-message"
+					th:each="error : ${#fields.errors('userName')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="form-group col-md-4"
+				th:classappend="${#fields.hasErrors('phone')}? 'has-error':''">
+				<label for="phone" class="control-label">Phone</label> <input
+					id="phone" class="form-control" th:field="*{phone}" placeholder="Phone"/>
+				<p class="error-message"
+					th:each="error : ${#fields.errors('phone')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="form-group col-md-4"
+				th:classappend="${#fields.hasErrors('address')}? 'has-error':''">
+				<label for="address" class="control-label">Address</label> <input
+					id="address" class="form-control" th:field="*{address}" placeholder="Address"/>
+				<p class="error-message"
+					th:each="error : ${#fields.errors('address')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			</div>
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('image')}? 'has-error':''">
+				<label for="image" class="control-label">Image</label> <input
+					id="image" class="form-control-file" th:field="*{image}" type="file" />
+				<p class="error-message"
+					th:each="error : ${#fields.errors('image')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="row">
+			<div class="form-group col-md-6"
+				th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
+				<label for="email" class="control-label">E-mail</label> <input
+					id="email" class="form-control" th:field="*{email}" placeholder="E-mail"/>
+				<p class="error-message"
+					th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="form-group col-md-6"
+				th:classappend="${#fields.hasErrors('confirmEmail')}? 'has-error':''">
+				<label for="confirmEmail" class="control-label">Confirm
+					e-mail</label> <input id="confirmEmail" class="form-control"
+					th:field="*{confirmEmail}" placeholder="Confirm E-mail"/>
+				<p class="error-message"
+					th:each="error : ${#fields.errors('confirmEmail')}"
+					th:text="${error}">Validation error</p>
+			</div>
+			</div>
+			<div class="row">
+			<div class="form-group col-md-6"
+				th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
+				<label for="password" class="control-label">Password</label> <input
+					id="password" class="form-control" type="password"
+					th:field="*{password}" placeholder="Password"/>
+				<p class="error-message"
+					th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="form-group col-md-6"
+				th:classappend="${#fields.hasErrors('confirmPassword')}? 'has-error':''">
+				<label for="confirmPassword" class="control-label">Confirm
+					password</label> <input id="confirmPassword" class="form-control"
+					type="password" th:field="*{confirmPassword}" placeholder="Confirm Password"/>
+				<p class="error-message"
+					th:each="error : ${#fields.errors('confirmPassword')}"
+					th:text="${error}">Validation error</p>
+			</div>
+			</div>
+			<div class="form-group"
+				th:classappend="${#fields.hasErrors('terms')}? 'has-error':''">
+				<input id="terms" type="checkbox" th:field="*{terms}" /> <label
+					class="control-label" for="terms"> I agree with the <a
+					href="#">terms and conditions</a>.
+				</label>
+				<p class="error-message"
+					th:each="error : ${#fields.errors('terms')}" th:text="${error}">Validation
+					error</p>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-outline-success">Register</button>
+				<span> &nbsp; Already registered? <a href="/" th:href="@{/login}">Login
+						here</a></span>
+			</div>
+		</form>
+	</div>
+
+	<!----------------------END OF THE USER REGISTRATION SECTION------------------------>
+
+
+	<!------------------------------START OF THE FOOTER SECTION---------------------------------------->
+	<section id="footer">
+			<p>
+				<i class="fa fa-copyright"></i> 2021 Nepali Cravings Pvt. Ltd. All
+				Rights Reserved.
+			</p>
+	</section>
+	<!------------------------------END OF THE FOOTER SECTION ------------------------------------>
+	<script>
+		function myFunction() {
+			var x = document.getElementById("myTopnav");
+			var s = document.getElementById("newlists");
+			if (s.className === "newlist") {
+				s.className += " responsive";
+
+			} else {
+				x.className = "topnav";
+				s.className = "newlist"
+			}
+		}
+		/* $(document).ready(function(){
+		
+		 $('#mai').hide();
+		 $('#lists').on('click', function() {
+		 $('#mai').toggle();
+		 });
+		
+		 }); */
+	</script>
+
+
+</body>
+</html>

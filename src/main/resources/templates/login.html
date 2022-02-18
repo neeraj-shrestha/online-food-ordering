@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nepali Cravings</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/newnav.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+</head>
+<body>
+
+
+	<!----------------------START OF THE NAVIGATION BAR SECTION------------------------>
+	<section id="nav-bar">
+		<div class="topnav" id="myTopnav">
+
+			<div id="lofo">
+				<a href="#"><img align="left" src="image/LOGO.png"></a>
+
+			</div>
+			<div id="newlists" class="newlist">
+				<div>
+					<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+						<i class="fa fa-bars"></i>
+					</a>
+				</div>
+				<div id="extranav">
+					<div class="navlist">
+						<a th:href="@{/}"><i class="fas fa-home"></i> Home</a> <a class="nav-link"
+						th:href="@{/restaurantregistration}"><i class="fas fa-building"></i> Restaurant register</a>
+					<a th:href="@{/registration}"><i class="fas fa-user-plus"></i> SignUp</a>
+					<a th:href="@{/login}"><i class="fas fa-sign-in-alt"></i> Login</a> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!----------------------END OF THE NAVIGATION BAR SECTION------------------------>
+
+
+
+	<!----------------------START OF THE LOGIN SECTION------------------------>
+	<div class="container">
+		<div class="content">
+
+			<h1 class="heading" style="font-family: montserrat; font-weight: 50; margin-top: 0px; font-size: 40px;">Login</h1>
+			<form th:action="@{/login}" method="post">
+
+				<div class="alert alert-danger" th:if="${param.error}"
+					th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+					<span th:text="${errorMsg}">Wrong input!</span>
+					<div class="modal" id="myModal" role="dialog">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content" id="contents">
+							<div class="modal-header">
+								<h5 class="modal-title">
+									<i class="fa fa-fw fa-warning"></i>Warning!!!
+								</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<i class="fa fa-fw fa-warning fa-4x" id="warn"></i> <label><span
+									th:text="${errorMsg}">Wrong input!</span></label>
+							</div>
+							<div class="modal-footer">
+
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">OK</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				</div>
+				<div th:if="${param.logout}">
+					<div class="alert alert-info">You have been logged out.</div>
+				</div>
+				<div class="input-box">
+					<input type="text"
+						id="username" name="username" class="input-control"
+						autofocus="autofocus" placeholder="Username" style=" padding: 13px;">
+				</div>
+				<div class="input-box">
+					<input type="password"
+						id="password" name="password" class="input-control"
+						placeholder="Password" style="padding: 13px;">
+				</div>
+				<div class="input-box">
+					<input type="submit" name="login-submit" id="login-submit"
+								class="input-submit" style="font-size: 20px;" value="LOGIN" />
+						
+				</div>
+				<div class="login-cta">
+					<span>Don't have an account?<a href="/" th:href="@{/registration}"> Sign up here</a></span>
+				</div>
+				
+			</form>
+		</div>
+	</div>
+	<!------------------------------START OF THE FOOTER SECTION---------------------------------------->
+	<section id="footer">
+			<p>
+				<i class="fa fa-copyright"></i> 2021 Nepali Cravings Pvt. Ltd. All
+				Rights Reserved.
+			</p>
+	</section>
+	<!------------------------------END OF THE FOOTER SECTION ------------------------------------>
+	<script th:if="${param.error}">
+		$(function() {
+			$('#myModal').modal('show');
+		});
+	</script>
+	<script>
+		function myFunction() {
+			var x = document.getElementById("myTopnav");
+			var s = document.getElementById("newlists");
+			if (s.className === "newlist") {
+				s.className += " responsive";
+
+			} else {
+				x.className = "topnav";
+				s.className = "newlist"
+			}
+		}
+	</script>
+</body>
+</html>

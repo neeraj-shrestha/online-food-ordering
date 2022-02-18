@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Nepali Cravings</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/newnav.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+	<!----------------------START OF THE NAVIGATION BAR SECTION------------------------>
+	<section id="nav-bar">
+		<div class="topnav" id="myTopnav">
+			<div id="lofo">
+				<a href="#"><img align="left" src="image/LOGO.png"></a>
+			</div>
+			<div id="newlists" class="newlist">
+				<div>
+					<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+						<i class="fa fa-bars"></i>
+					</a>
+				</div>
+				<div id="extranav">
+					<div class="navlist">
+						<a th:href="@{/adminindex}"><i class="fa fa-home"></i> Home</a> <a th:href="@{/adminuser}"><i
+							class="fa fa-fw fa-user"></i> Users</a> 
+						<a href="" data-toggle="collapse" data-target="#list" id="lists">
+							<img th:src="@{/admin/{id}(id=${admins.id})}"><i
+							class="fa fa-caret-down fa-2x"></i>
+						</a>
+					</div>
+					<div id="mai" align="right">
+						<ul id="list" class="collapse">
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/adminProfile}"><i class="fa fa-fw fa-user"></i> Profile</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/logout}"><i class="fa fa-fw fa-sign-out"></i> Log
+									out</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!----------------------END OF THE NAVIGATION BAR SECTION------------------------>
+
+	<!---------------------------START OF THE SLIDER SECTION---------------------------->
+	<div class="container-fluid" style="margin-bottom: 45px;">
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header" style="color: grey;">
+					Welcome 
+				</h1>
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<div class="row" id="dashitem">
+							<div class="col-xs-3">
+								<i class="fa fa-users fa-5x"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class='huge' th:text="${users.size}" align="left"></div>
+								<div>Users</div>
+							</div>
+						</div>
+					</div>
+					<a href="/adminuser"> <th:div class="panel-footer">
+							<span class="pull-left">View Details</span>
+							<span class="pull-right"><i
+								class="fa fa-arrow-circle-right"></i></span>
+							<div class="clearfix"></div>
+						</th:div>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<div class="panel panel-red">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-building fa-5x"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class='huge' th:text="${rest.size}" align="left"></div>
+								<div>Approved Restaurant</div>
+							</div>
+						</div>
+					</div>
+					<a href="/approvedrestaurant"> <th:div class="panel-footer">
+							<span class="pull-left">View Details</span>
+							<span class="pull-right"><i
+								class="fa fa-arrow-circle-right"></i></span>
+							<div class="clearfix"></div>
+						</th:div>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<div class="panel panel-yellow">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-star fa-5x"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class='huge' th:text="${restaurant.size}" align="left"></div>
+								<div>Unapproved Restaurant</div>
+							</div>
+						</div>
+					</div>
+					<a href="/unapprovedrestaurant"> <th:div class="panel-footer">
+							<span class="pull-left">View Details</span>
+							<span class="pull-right"><i
+								class="fa fa-arrow-circle-right"></i></span>
+							<div class="clearfix"></div>
+						</th:div>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<div class="panel panel-yellow">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-comments-o fa-5x"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class='huge' th:text="${usermessages.size}" align="left"></div>
+								<div>Reviews from user</div>
+							</div>
+						</div>
+					</div>
+					<a href="/usermessage"> <th:div class="panel-footer">
+							<span class="pull-left">View Details</span>
+							<span class="pull-right"><i
+								class="fa fa-arrow-circle-right"></i></span>
+							<div class="clearfix"></div>
+						</th:div>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<div class="panel panel-yellow">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-3">
+								<i class="fa fa-comments fa-5x"></i>
+							</div>
+							<div class="col-xs-9 text-right">
+								<div class='huge' th:text="${restmessages.size}" align="left"></div>
+								<div>Reviews from restaurant</div>
+							</div>
+						</div>
+					</div>
+					<a href="/restmessage"> <th:div class="panel-footer">
+							<span class="pull-left">View Details</span>
+							<span class="pull-right"><i
+								class="fa fa-arrow-circle-right"></i></span>
+							<div class="clearfix"></div>
+						</th:div>
+					</a>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading" id="adprofile">
+					<a href="/adminProfile"> <th:div class="row" id="dashitem">
+							<div class="col-xs-3" >
+								<i class="fa fa-user fa-5x"></i>
+							</div>
+							<div class="col-xs-9 text-right" style="padding: 25px;">
+								<div>View Profile</div>
+							</div>
+						</th:div>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4 col-md-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading" id="adprofile">
+					<a href="/paymentAddition"> <th:div class="row" id="dashitem">
+							<div class="col-xs-3">
+								<i class="fa fa-money fa-5x"></i>
+							</div>
+							<div class="col-xs-9 text-right" style="padding: 25px;">
+								<div>Payment methods</div>
+							</div>
+						</th:div>
+					</a>
+				</div>
+			</div>
+		</div>
+		</div>
+		
+	</div>
+
+	<!---------------------------END OF THE SLIDER SECTION---------------------------->
+
+
+
+
+	<!--------------------------START OF THE FOOTER SECTION--------------------------------->
+	<section id="footer">
+			<p>
+				<i class="fa fa-copyright"></i> 2021 Nepali Cravings Pvt. Ltd. All
+				Rights Reserved.
+			</p>
+	</section>
+	<!---------------------------END OF THE FOOTER SECTION------------------------------->
+
+
+</body>
+</html>

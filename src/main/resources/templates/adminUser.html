@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Nepali Cravings</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/newnav.css">
+
+<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<script type="text/javascript"
+	src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+
+</head>
+<body>
+
+	<!----------------------START OF THE NAVIGATION BAR SECTION------------------------>
+	<section id="nav-bar">
+		<div class="topnav" id="myTopnav">
+			<div id="lofo">
+				<a href="#"><img align="left" src="image/LOGO.png"></a>
+			</div>
+			<div id="newlists" class="newlist">
+				<div>
+					<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+						<i class="fa fa-bars"></i>
+					</a>
+				</div>
+				<div id="extranav">
+					<div class="navlist">
+						<a th:href="@{/adminindex}"><i class="fa fa-home"></i> Home</a> <a th:href="@{/adminuser}"><i
+							class="fa fa-fw fa-user"></i> Users</a>
+						<a href="" data-toggle="collapse" data-target="#list" id="lists">
+							<img th:src="@{/admin/{id}(id=${admins.id})}"><i
+							class="fa fa-caret-down fa-2x"></i>
+						</a>
+					</div>
+					<div id="mai" align="right">
+						<ul id="list" class="collapse">
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/adminProfile}"><i class="fa fa-fw fa-user"></i> Profile</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/logout}"><i class="fa fa-fw fa-sign-out"></i> Log
+									out</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!----------------------END OF THE NAVIGATION BAR SECTION------------------------>
+
+
+	<section id="restable" style="margin-top: 30px; margin-left: 40px; margin-right: 40px; border-bottom: 2px solid #e6e6e6;">
+		<!----------------------START OF THE LIST OF USERS SECTION------------------------>
+		<section id="usertable">
+			<table id="used" class="display" style="width: 100%">
+				<thead style="background-color: #e6e6e6;">
+					<tr>
+						<th>ID</th>
+						<th>FIRST NAME</th>
+						<th>LAST NAME</th>
+						<th>IMAGE</th>
+						<th>EMAIL</th>
+						<th>ACTION</th>
+					</tr>
+				</thead>
+				<tbody id="body">
+					<tr th:each="users: ${user}">
+						<td id="myid" th:text="${users.id}"></td>
+						<td th:text="${users.firstName}"></td>
+						<td th:text="${users.lastName}"></td>
+						<td id="tabImage"><img th:src="@{/user/{id}(id=${users.id})}"></td>
+						<td th:text="${users.email}"></td>
+						<td>
+							<button type="button" class="btn btn-outline-danger" data-toggle='modal'
+								data-target='#myModal' th:attrappend="data-target=${users.id}">DELETE</button>
+							<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+								th:attrappend="id=${users.id}"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content" id="contents">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">
+												<i class="fa fa-fw fa-warning"></i>Confirm delete
+											</h5>
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<label>Are you sure you want to delete <span
+												th:text="${users.email}"></span>??
+											</label>
+
+											<div class="modal-footer">
+												<a id="userdelete"
+													th:href="@{/userdelete/{id}(id=${users.id})}"><button
+														type="submit" class="btn btn-primary">Yes</button></a>
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">No</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+		<!----------------------END OF THE LIST OF USERS SECTION------------------------>
+	</section>
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" id="contents">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						<i class="fa fa-fw fa-warning"></i>Warning!!!
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<i class="fa fa-fw fa-warning fa-4x" id="warn"></i> <label style="text-transform: capitalize;"
+						th:text="${deleteduserError}"></label>
+				</div>
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">OK</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="myModal3" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" id="contents">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						<i class="fa fa-fw fa-check-circle"></i>Success!!!
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="modalbody">
+					<i class="fa fa-fw fa-check-circle fa-4x" id="warn"></i> <label style="text-transform: capitalize;"
+						th:text="${deleteduser}"></label>
+				</div>
+
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">OK</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<!------------------------------START OF THE FOOTER SECTION---------------------------------------->
+	<section id="footer">
+			<p>
+				<i class="fa fa-copyright"></i> 2021 Nepali Cravings Pvt. Ltd. All
+				Rights Reserved.
+			</p>
+	</section>
+	<!------------------------------END OF THE FOOTER SECTION -------------------------------------->
+	<script th:if="${deleteduserError}">
+		$(function() {
+			$('#myModal2').modal('show');
+		});
+	</script>
+	<script th:if="${deleteduser}">
+		$(function() {
+			$('#myModal3').modal('show');
+		});
+	</script>
+	<script th:inline="javascript">
+			$(document).ready(function(){
+		    $('#used').dataTable();
+		});
+			</script>
+
+
+</body>
+</html>

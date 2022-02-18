@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Nepali Cravings</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/newnav.css">
+<link rel="stylesheet" href="css/footer.css">
+
+<!------- Poppins Font ------->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;0,800;0,900;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+</head>
+<body id="menubody" th:fragment="restaurants">
+
+	<!---------------------------START OF THE NAVIGATION BAR SECTION---------------------------->
+	<section id="nav-bar">
+		<div class="topnav" id="myTopnav">
+			<div id="lofo">
+				<a href="#"><img align="left" src="image/LOGO.png"></a>
+			</div>
+			<div id="newlists" class="newlist">
+				<div>
+					<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+						<i class="fa fa-bars"></i>
+					</a>
+				</div>
+				<div>
+					<div class="navlist">
+						<a th:href="@{/userindex}"><i class="fa fa-home"></i> Home</a> <a th:href="@{/userorders}"><i
+							class="fa fa-fw fa-cart-arrow-down"></i> My Orders</a> <a
+							th:href="@{/selectrest}"><i class="fa fa-fw fa-building"></i> Restaurants</a>
+						<a href="/selectforReview" class="active"><i
+							class="fa fa-star"></i> Reviews</a> <a href="" data-toggle="collapse"
+							data-target="#list" id="lists"> <img
+							th:src="@{/user/{id}(id=${user.id})}"><i
+							class="fa fa-caret-down fa-2x"></i>
+						</a>
+
+					</div>
+					<div id="mai" align="right">
+						<ul id="list" class="collapse">
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/userProfile}"><i class="fa fa-fw fa-user"></i> Profile</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/usercart}"><i class="fa fa-fw fa-shopping-cart"></i> My
+									cart</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Log
+									out</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!------------------------------END OF THE NAVIGATION BAR SECTION----------------------------------------->
+<!--	<section id="wrappers">
+	<div id="selhead">
+			<h1>select restaurant for reviews</h1>
+		</div>
+-->
+		<!----------------------START OF THE SEARCH BAR SECTION------------------------>
+		<section id="restsearch" style="margin-top: 25px;">
+			<div align="right">
+			 <input id="textSearch" type="text" name="keyword" placeholder="&#xF002; Search"
+					style="font-family: Arial, FontAwesome; padding: 5px;">
+
+			</div>
+		</section>
+		<!----------------------END OF THE SEARCH BAR SECTION------------------------>
+
+
+		<!-----------------------------START OF THE RESTAURANT SELECTION SECTION --------------------------------->
+		<style type="text/css">
+	.col-md-4 .nav-link:hover {
+      color: black;
+    }
+    .col-md-4 a:hover {
+      text-decoration: none; 
+    }
+    </style>
+	
+		<section style=" display: flex; justify-content: center; align-items: center; flex-direction: column; width: 100%; font-family: poppins; margin-top: 100px;" id="rests">
+  <h1 style="font-size: 2.2rem; font-weight: 500; background-color: black; color: white; padding: 10px 20px;">RESTAURANTS</h1>
+				<div class="row" id="indexrow" style="margin-left: 30px;">
+					<div class="col-md-4" id="restpic" th:each="restaurant : ${restaurants}">
+						<div align="center" style="background-color:white; border-radius: 5px; padding:25px; width: 450px">
+							<a th:href="@{/reviews/{id}(id=${restaurant.getId()})}">
+									<img th:src="@{/restaurant/{id}(id=${restaurant.getId()})}" class="img-thumbnail" style="border-radius: 15px;">
+									<h5 class="nav-link" style="font-family: montserrat; font-size: 25px;" id=head th:text="${restaurant.getRest_name()}"></h5>
+								</th:div></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-----------------------------END OF THE RESTAURANT SELECTION SECTION --------------------------------->
+
+
+
+	</section>
+
+	<!------------------------------START OF THE FOOTER SECTION---------------------------------------->
+	<section id="footer">
+			<p>
+				<i class="fa fa-copyright"></i> 2021 Nepali Cravings Pvt. Ltd. All
+				Rights Reserved.
+			</p>
+	</section>
+	<!------------------------------END OF THE FOOTER SECTION------------------------------------>
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/			
+			var rest=/*[[${restaurants}]]*/;
+		/*]]>*/
+
+		
+			$('#textSearch').on('keyup', function(){
+				var value=$(this).val();
+				var data=FilterFunction(value, rest);
+				rebuildTable(data);
+			});
+
+			function FilterFunction(value, data){
+				var filterData=[];
+				for(var i=0;i<data.length;i++){
+					value= value.toLowerCase(); 
+					var fname=data[i].rest_name.toLowerCase(); 
+					if(fname.includes(value)){
+						filterData.push(data[i]);
+					}
+				}
+				return filterData;
+			}
+
+			function rebuildTable(data){
+				var tbody= document.getElementById('indexrow');
+				tbody.innerHTML=''
+				for(var i=0;i<data.length;i++){
+					var rows='<div class=col-md-4 id=restpic ><div align="center" id="indeximage">'+
+					'<a href="menu/"'+data[i].id+'><th:div class=rest>'+
+					'<h5 class=rhead id=head>'+data[i].rest_name+'</h5>'+
+					'<img src="/restaurant/'+data[i].id+'"></th:div></a></div></div>'
+					tbody.innerHTML+=rows;
+				}
+			}
+		
+	</script>
+	<!----------------------END OF JAVASCRIPT FOR USER SEARCH BAR------------------------>
+	<script>
+		function myFunction() {
+			var x = document.getElementById("myTopnav");
+			var s = document.getElementById("newlists");
+			if (s.className === "newlist") {
+				s.className += " responsive";
+
+			} else {
+				x.className = "topnav";
+				s.className = "newlist"
+			}
+		}
+	</script>
+
+
+</body>
+</html>

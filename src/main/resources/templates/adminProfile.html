@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Nepali Cravings</title>
+
+<link rel="stylesheet" href="css/profile.css">
+<link rel="stylesheet" href="css/newnav.css">
+<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.0.11/css/font-awesome.min.css">
+
+</head>
+<body>
+	<section id="nav-bar">
+		<div class="mytopnav2" id="myTopnav">
+			<div id="lofo">
+				<a href="#"><img align="left" src="image/LOGO.png"></a>
+			</div>
+			<div id="newlists" class="newlist">
+				<div>
+					<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+						<i class="fa fa-bars"></i>
+					</a>
+				</div>
+				<div id="extranav">
+					<div class="navlist">
+						<a th:href="@{/adminindex}"><i class="fa fa-home"></i> Home</a> <a th:href="@{/adminuser}"><i
+							class="fa fa-fw fa-user"></i> Users</a> 
+						<a href="" data-toggle="collapse" data-target="#list" id="lists">
+							<img th:src="@{/admin/{id}(id=${admins.id})}"><i
+							class="fa fa-caret-down fa-2x"></i>
+						</a>
+					</div>
+					<div id="mai" align="right">
+						<ul id="list" class="collapse">
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/adminProfile}"><i class="fa fa-fw fa-user"></i> Profile</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/logout}"><i class="fa fa-fw fa-sign-out"></i> Log
+									out</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<section id="profileBody" class="responsive">
+		<div class="sad" id="sidenav">
+			<ul>
+				<li><a href="/adminProfile"><i class="fa fa-fw fa-user"></i>
+						Profile</a></li>
+				<li><a href="#imagechange" data-toggle='modal'
+					data-target='#imagechange'><i class="fa fa-fw fa-image"></i>
+						Update Image</a></li>
+				<li><a href="#myModal" data-toggle='modal'
+					data-target='#myModal'><i class="fa fa-fw fa-user-plus"></i>
+						Update Profile</a></li>
+				<li><a href="" data-toggle='modal'
+					data-target='#passwordchange'><i class="fa fa-fw fa-key"></i>
+						Update Password</a></li>
+			</ul>
+		</div>
+
+
+
+		<!---------------------------START OF THE USER PROFILE SECTION---------------------------->
+		<div id="mainprofile">
+			<h3>Profile</h3>
+			<div id="profile">
+				<div id="profileimage">
+					<div align="center">
+						<a th:href="@{/admin/{id}(id=${admins.id})}"><img
+							class="responsive" th:src="@{/admin/{id}(id=${admins.id})}"></a>
+					</div>
+					<div id="imgChangeButton" align="center">
+						<a href="" data-toggle='modal' data-target='#imagechange'><i
+							class="fa fa-fw fa-image"></i>Update</a>
+					</div>
+
+				</div>
+				<div id="resdet">
+					<label>First name: &nbsp; </label><span th:text="${admins.firstName}"></span><br>
+					<label>Last name: &nbsp; </label><span th:text="${admins.lastName}"></span><br>
+					<label>Username: &nbsp; </label><span th:text="${admins.userName}"></span><br>
+					<label>Phone: &nbsp; </label><span th:text="${admins.phone}"></span><br>
+					<label>Address: &nbsp; </label><span th:text="${admins.address}"></span><br>
+					<label>Email: &nbsp; </label><span th:text="${admins.email}"></span><br>
+					<button data-toggle='modal' data-target='#myModal'
+						class="btn btn-primary">Update</button>
+				</div>
+			</div>
+		</div>
+		<!---------------------------END OF THE USER PROFILE SECTION---------------------------->
+
+	</section>
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						<i class="fa fa-fw fa-user"></i> Update profile
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form th:action="@{/changeProfileAdmin}" th:object="${admin}"
+					method="post" enctype="multipart/form-data">
+					<div class="modal-body">
+
+						<div class="form-group">
+							<label for="firstName" class="control-label">First name</label> <input
+								id="firstName" class="form-control" th:field="*{firstName}" />
+						</div>
+						<div class="form-group">
+							<label for="lastName" class="control-label">Last name</label> <input
+								id="lastName" class="form-control" th:field="*{lastName}" />
+						</div>
+						<div class="form-group">
+							<label for="userName" class="control-label">Username</label> <input
+								id="userName" class="form-control" th:field="*{userName}" />
+						</div>
+						<div class="form-group">
+							<label for="phone" class="control-label">Phone</label> <input
+								id="phone" class="form-control" th:field="*{phone}" />
+						</div>
+						<div class="form-group">
+							<label for="address" class="control-label">Address</label> <input
+								id="address" class="form-control" th:field="*{address}" />
+						</div>
+						<div class="form-group">
+							<label for="email" class="control-label">E-mail</label> <input
+								id="email" class="form-control" th:field="*{email}" />
+						</div>
+						<div class="form-group">
+							<label for="email" class="control-label"> Confirm E-mail</label>
+							<input id="confirmemail" class="form-control" />
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">Save update</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="imagechange" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						<i class="fa fa-fw fa-image"></i> Update Image
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form th:action="@{/adminimagechange}" method="post"
+					enctype="multipart/form-data">
+					<div class="modal-body">
+					<div>
+						<label>Photos: </label> <input id="image" class="form-control-file"
+							name="image" type="file" />
+					</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">Save update</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="passwordchange" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						<i class="fa fa-fw fa-key"></i> Update Password
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form th:action="@{/changePasswordAdmin}" th:object="${admin}"
+					method="post">
+					<div class="modal-body">
+					<div class="form-group">
+						<label for="password" class="control-label">Password</label> <input
+							id="password" class="form-control" type="password"
+							th:field="*{password}" />
+					</div>
+					<div class="form-group">
+						<label for="Password" class="control-label">Confirm
+							Password</label> <input id="confirmPassword" class="form-control"
+							type="password" th:field="*{Password}" />
+
+					</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">Save update</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!------------------------------START OF THE FOOTER SECTION---------------------------------------->
+	<section id="footer">
+			<p>
+				<i class="fa fa-copyright"></i> 2021 Nepali Cravings Pvt. Ltd. All
+				Rights Reserved.
+			</p>
+	</section>
+	<!------------------------------END OF THE FOOTER SECTION------------------------------------>
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			$('#newlist').hide();
+			$('#lists').on('hover', function() {
+				$('#newlist').show();
+			});
+
+		});
+	</script>
+
+	<script>
+		function myFunction() {
+			var x = document.getElementById("myTopnav");
+			var s = document.getElementById("newlists");
+			if (s.className === "newlist") {
+				s.className += " responsive";
+
+			} else {
+				x.className = "topnav";
+				s.className = "newlist"
+			}
+		}
+		/* $(document).ready(function(){
+		
+		 $('#mai').hide();
+		 $('#lists').on('click', function() {
+		 $('#mai').toggle();
+		 });
+		
+		 }); */
+	</script>
+</body>
+</html>

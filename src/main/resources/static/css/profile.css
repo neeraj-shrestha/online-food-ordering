@@ -1,0 +1,101 @@
+html{
+	height:100%;
+}
+body{
+	height:100%;
+}
+#profileimage img {
+  border-radius: 50%;
+  width:200px;
+  height: 200px;
+}
+.dropdown img{
+	 border-radius: 50%;
+  width:40px;
+  height: 40px;
+	
+}
+#profileimage{
+  display: block;
+  width:300px;
+}
+#lists{
+	display: flex;
+	text-decoration: none;
+}
+#lists .fa{
+	padding-top: 5px;
+	padding-left: 2px;
+}
+#imgChangeButton{
+	margin-top: 5px;
+}
+#profile{
+  display: flex;
+}
+#sublist{
+	height: 100%;
+}
+#profileBody{
+	border-top: 1px solid black;
+  display: flex;
+  width:100%;
+  height: 100%;
+  padding-bottom: 0.5%;
+}
+#nextnav{
+	display: flex;
+	height:100%;
+}
+.sad {
+	height:100%;
+  width: 20%; /* 0 width - change this with JavaScript */
+  position:relative; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #222; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px; /* Place content 20px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+.sad>ul {
+    padding: 0;
+}
+
+.sad>ul>li>a {
+    display: block;
+    padding: 10px 15px 10px 38px;
+    text-decoration: none;
+    color: #999;
+}
+.sad>li>a {
+        width: 225px;
+    }
+
+    .sad li a:hover,
+    .sad li a:focus {
+        outline: none;
+        background-color: #000 !important;
+    }
+#mainprofile{
+	height:100%;
+	 position:relative; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0; 
+  padding-top: 20px; /* Place content 20px from the top */
+  transition: 0.5s;
+}
+#mainprofile h3{
+	padding-top:5px;
+	font-family: montserrat;
+	font-weight:bold;
+	font-size:50px;
+	text-align: center;
+	margin-bottom: 20px;
+}
+#mainsec{
+	
+}

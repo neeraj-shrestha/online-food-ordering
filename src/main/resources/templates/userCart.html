@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nepali Cravings</title>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/newnav.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/cdnjs/sweetalert.min.css">
+<script src="/js/cdnjs/sweetalert.min.js"></script>>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+</head>
+<body>
+	<section id="warps">
+		<!---------------------------START OF THE NAVIGATION BAR SECTION---------------------------->
+		<section id="nav-bar">
+			<div class="topnav" id="myTopnav">
+				<div id="lofo">
+					<a href="#"><img align="left" src="/image/LOGO.png"></a>
+				</div>
+				<div id="newlists" class="newlist">
+					<div>
+						<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+							<i class="fa fa-bars"></i>
+						</a>
+					</div>
+					<div>
+						<div class="navlist">
+							<a th:href="@{/userindex}"><i class="fa fa-home"></i> Home</a> <a th:href="@{/userorders}"><i
+								class="fa fa-fw fa-cart-arrow-down"></i> My Orders</a> <a
+								th:href="@{/selectrest}"><i class="fa fa-fw fa-building"></i> Restaurants</a>
+							<a href="/selectforReview"><i
+								class="fa fa-star"></i> Reviews</a> <a href=""
+								data-toggle="collapse" data-target="#list" id="lists"> <img
+								th:src="@{/user/{id}(id=${user.id})}"><i
+								class="fa fa-caret-down fa-2x"></i>
+							</a>
+						</div>
+						<div id="mai" align="right">
+							<ul id="list" class="collapse">
+								<li class="nav-item"><a class="nav-link"
+									th:href="@{/userProfile}"><i class="fa fa-fw fa-user"></i>Profile</a></li>
+								<li class="nav-item"><a class="nav-link"
+									th:href="@{/usercart}"><i class="fa fa-fw fa-shopping-cart"></i>My
+										cart</a></li>
+								<li class="nav-item"><a class="nav-link"
+									th:href="@{/logout}"><i class="fa fa-fw fa-sign-out"></i>Log
+										out</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!---------------------------END OF THE NAVIGATION BAR SECTION---------------------------->
+
+
+
+		<section id="usetable" style="margin-top: 30px; margin-left: 40px; margin-right: 40px; border-bottom: 2px solid #e6e6e6;">
+			<!---------------------------START OF THE LIST OF USER ORDERS SECTION---------------------------->
+			<section id="usertable">
+				<div th:if="${invalid}">
+					<div class="alert alert-danger" th:text="${invalid}"></div>
+				</div>
+				<table id="userorder" class="display" style="width: 100%">
+					<thead style="background-color: #e6e6e6;">
+						<tr>
+							<th>ID</th>
+							<th>Quantity</th>
+							<th>Total Price</th>
+							<th>Food</th>
+							<th>Restaurant</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody id="body">
+						<tr th:each="carts: ${cart}">
+							<td th:text="${carts.id}"></td>
+							<td th:text="${carts.quantity}"></td>
+							<td th:text="${carts.totalPrice}"></td>
+							<td th:text="${carts.foods.getFoodName()}"></td>
+							<td th:text="${carts.restaurant.getRest_name()}"></td>
+							<td>
+								<button type="button" class="btn btn-outline-primary"
+									data-toggle='modal' data-target='#myModal'
+									th:attrappend="data-target=${carts.id}">Order</button>
+									<a th:href="@{/removecart/{id}(id=${carts.id})}">
+									<button type="button" class="btn btn-outline-danger">Remove</button></a>
+								<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+									th:attrappend="id=${carts.id}"
+									aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content" id="contents">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel">
+													<i class="fa fa-fw fa-warning"></i>Confirm order
+												</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<form th:action="@{/savingOrder/{id}(id=${carts.id})}"
+												th:object="${order}" method="post" id="orderfood" th:attrappend="id=${carts.id}">
+												<div class="modal-body"> 
+												<div class="form-group row">
+												<input type="hidden"
+													th:value="${carts.getId()}" class="res" /> <label class="col-sm-4 col-form-label">Food:</label>
+													<div class="col-sm-8">
+														<input class="form-control-plaintext" th:value="${carts.foods.getFoodName()}" readonly="readonly">
+													</div> <br> <br>
+													<label class="col-sm-4 col-form-label" style="margin-left: 0px;">Quantity:</label>
+													<div class="col-sm-8">
+														<input class="form-control-plaintext" type="number" th:value="${carts.quantity}" name="quantity"
+														readonly="readonly"> <br>
+													</div>
+													<label class="col-sm-4 col-form-label" style="margin-left: 0px;">Total Price:</label>
+													<div class="col-sm-8">
+														<input class="form-control-plaintext" type="number" th:value="${carts.totalPrice}"
+														name="totalPrice" readonly="readonly">
+													</div>	
+													<input type="hidden" th:value="${carts.foods.getId()}"
+													name="foods"> <br> <br> <br>
+													<label class="col-sm-4 col-form-label" style="margin-left: 0px;">Delivery Address:</label> 
+													<div class="col-sm-8">
+														<input class="form-control" type="text" id="deliveryId" th:attrappend="id=${carts.id}"
+														th:field="*{delivery.deliveryAddress}" /> <br>
+													</div>	
+													<label for="payment" class="col-sm-4 col-form-label">Payment Method</label>
+													<div class="col-sm-8">
+														<select th:field="*{payment}" class="form-control"
+														id="select_one" th:attrappend="id=${carts.id}">
+														<option
+														th:each="pay: ${carts.foods.restaurant.getPayment()}"
+														th:value="${pay.getId()}"
+														th:text="${pay.getPaymentMethod()}" />
+														</select>
+													</div>	
+												</div>
+												</div>
+												<div class="modal-footer">
+												<button type="button" class="btn btn-primary" id="huds"
+													th:attrappend="id=${carts.id}">Yes</button>
+												<button type="button" class="btn btn-secondary"
+													data-dismiss="modal">No</button>
+												<div id="cardpay">
+													<script src='https://checkout.stripe.com/checkout.js'
+														class='stripe-button'
+														th:attr='data-key=pk_test_51J6cE8IG0AWYDz2b0EPbg06E6IVqxuEFdxICAfewONoMoKBDyPbkDB3FyN8gEIIUaXoQbpm6kSn8pk8v9o2wgltz00a8OB1K16,
+																data-amount=${carts.totalPrice},
+																data-currency=${currency}'
+														data-name='nepali craving'
+														data-description='payment of order'
+														data-image='image/LOGO.png' data-locale='auto'
+														data-zip-code='false'>
+   													</script>
+												</div>
+												</div>	
+											</form>
+											<script>
+											$("input[class=res]").each(function() {
+												var id = $(this).attr("value");
+												var modalIsOpen = false;
+												$('#myModal'+id).on('shown.bs.modal', function(e) {
+													modalIsOpen = true;
+													if (modalIsOpen === true ) {
+														$('.stripe-button-el').hide();
+														$('#after'+id).hide();
+														if ($('#select_one'+id+' option:selected').text() =="Payment Through Card" ) {
+															$('.stripe-button-el').show();
+															$('#huds'+id).hide();
+															}
+														$('#select_one'+id).on('change', function() {
+															if ($('#select_one'+id+' option:selected').text() =="Payment Through Card" ) {
+																$('.stripe-button-el').show();
+																$('#huds'+id).hide();
+																}
+															else{
+																$('.stripe-button-el').hide();
+																$('#huds'+id).show();
+																}
+															});
+														}
+													});
+												$('#huds'+id).on('click', function(e) {
+													const csrf = $(this).find('input[name="_csrf"]').val();
+													$.ajax({
+														type : 'POST',
+														url : '/savingOrder',
+														data : $('#orderfood'+id).serializeArray(),
+														cache : false,
+														success : function(data) {
+															swal({
+																title : "Successful!",
+																text : "Successfully Ordered The Food!",
+																icon : "success",
+																},function() {
+																	window.location = "/removecart/"+id;
+																});
+													
+															},
+														error : function(data) {
+															swal({
+																title : "Error!",
+																text : "Error In Ordering food!",
+																icon : "error",
+																},function() {
+																	window.location = "/usercart";
+																	});
+															}
+														});
+													});
+												});
+											</script>
+										</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+		</section>
+		<!---------------------------START OF THE LIST OF USER ORDERS SECTION---------------------------->
+	</section>
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabels">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" id="contents">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabels">
+						<i class="fa fa-fw fa-warning"></i>Warning!!!
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="modalbody">
+					<i class="fa fa-fw fa-warning fa-4x" id="warn"></i> <label
+						th:text="${invalid}"></label>
+				</div>
+
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">ok</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="myModal3" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" id="contents">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						<i class="fa fa-fw fa-check-circle"></i>Success!!!
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="modalbody">
+					<i class="fa fa-fw fa-check-circle fa-4x" id="warn"></i> <label
+						th:text="${delivered}"></label>
+				</div>
+
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">ok</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<!------------------------------START OF THE FOOTER SECTION---------------------------------------->
+	<section id="footer">
+			<p>
+				<i class="fa fa-copyright"></i> 2021 Nepali Cravings Pvt. Ltd. All
+				Rights Reserved.
+			</p>
+	</section>
+	<!------------------------------END OF THE FOOTER SECTION------------------------------------>
+
+	<script th:if="${invalid}">
+		$(function () {
+        	$('#myModal2').modal('show');
+    	});
+	</script>
+	<script th:if="${delivered}">
+		$(function () {
+        	$('#myModal3').modal('show');
+    	});
+	</script>
+
+	<!----------------------START OF JAVASCRIPT FOR ORDERS SEARCH BAR------------------------>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+			var order=/*[[${orders}]]*/;
+		/*]]>*/
+		console.log(order);
+		$(document).ready(function(){
+			
+		    $('#userorder').dataTable();
+		});
+		
+		$('#textSearch').on('keyup', function(){
+			var value=$(this).val();
+			var data=FilterFunction(value, order);
+			console.log(data);
+			rebuildTable(data);
+		});
+
+		function FilterFunction(value, data){
+			var filterData=[];
+			for(var i=0;i<data.length;i++){
+				value= value.toLowerCase();
+				console.log(data[i].food.name);
+				var fname=data[i].food.name.toLowerCase();
+				var uname=data[i].restaurants.name.toLowerCase();
+				if(fname.includes(value)||uname.includes(value)){
+					filterData.push(data[i]);
+				}
+			}
+			return filterData;
+		}
+
+		function rebuildTable(data){
+			var tbody= document.getElementById('body')
+			tbody.innerHTML=''
+			for(var i=0;i<data.length;i++){
+				console.log(data[i].id);
+				var row='<tr>'+
+				'<td>'+data[i].id+'</td>'+
+				'<td>'+data[i].quantity+'</td>'+
+				'<td>'+data[i].totalPrice+'</td>'+
+				'<td id="tabImage"><img src="/food/'+data[i].food.id+'"></td>'+
+				'<td>'+data[i].paymentMethod+'</td>'+
+				'<td>'+data[i].status+'</td>'+
+				'<td>'+data[i].food.name+'</td>'+
+				'<td>'+data[i].restaurants.email+'</td>'+
+				'<td><a href="/deliveredOrder/'+data[i].id+'">'+
+				'<button type="button" class="btn btn-primary">delivered</button></a>'+
+				'</td></tr>'
+				tbody.innerHTML+=row;
+			}
+		}
+		
+	</script>
+	<!----------------------END OF JAVASCRIPT FOR ORDERS SEARCH BAR------------------------>
+	<script>
+		function myFunction() {
+			var x = document.getElementById("myTopnav");
+			var s = document.getElementById("newlists");
+			if (s.className === "newlist") {
+				s.className += " responsive";
+			} else {
+				x.className = "topnav";
+				s.className = "newlist"
+			}
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Nepali Cravings</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/newnav.css">
+<link rel="stylesheet" href="css/footer.css">
+
+<!------- Poppins Font ------->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;0,800;0,900;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+	<!----------------------------------START OF THE NAVIGATION BAR SECTION----------------------------------->
+	<section id="nav-bar">
+		<div class="topnav" id="myTopnav">
+
+			<div id="lofo">
+				<a href="#"><img align="left" src="image/LOGO.png"></a>
+
+			</div>
+			<div id="newlists" class="newlist">
+				<div>
+					<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+						<i class="fa fa-bars"></i>
+					</a>
+				</div>
+				<div id="extranav">
+					<div class="navlist">
+						<a th:href="@{/restaurantindex}"><i class="fa fa-home"></i> Home</a> <a
+							th:href="@{/restorder}"><i
+							class="fa fa-fw fa-cart-arrow-down"></i> Orders</a> <a
+							th:href="@{/reviewsofrest}"><i
+							class="fa fa-fw fa-building"></i> Reviews</a> <a href=""
+							data-toggle="collapse" data-target="#list" id="lists"> <img
+							th:src="@{/restaurant/{id}(id=${restaurant.id})}"><i
+							class="fa fa-caret-down fa-2x"></i></a>
+					</div>
+					<div id="mai" align="right">
+						<ul id="list" class="collapse">
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/restProfile}"><i class="fa fa-fw fa-user"></i> Profile</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/logout}"><i class="fa fa-fw fa-sign-out"></i> Log
+									out</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!----------------------------------START OF THE NAVIGATION BAR SECTION----------------------------------->
+
+
+	<!----------------------------------START OF THE FOOD SAVING SECTION----------------------------------->
+	<section id="foodsaving">
+		<h3 align="center">Add Food</h3>
+			<form method="post" th:action="@{/savefood}" th:object="${food}" 
+				enctype="multipart/form-data">
+				<div class="form-row">
+				<div class="form-group col-md-6"
+					th:classappend="${#fields.hasErrors('foodName')}? 'has-error':''">
+					<label for="foodName" class="control-label">Food Name</label> 
+					<input id="foodName" class="form-control" th:field="*{foodName}"
+						placeholder="Food Name" required="required" />
+					<p class="error-message"
+						th:each="error: ${#fields.errors('foodName')}" th:text="${error}">Validation
+						error</p>
+				</div>
+				<div class="form-group col-md-6"
+					th:classappend="${#fields.hasErrors('description')}? 'has-error':''">
+					<label for="price" class="control-label">Price</label> 
+						<input id="resprice" class="form-control" th:field="*{price}" 
+						placeholder="Price" required="required" />
+					<p class="error-message"
+						th:each="error: ${#fields.errors('price')}" th:text="${error}">Validation
+						error</p>
+				</div>
+				</div>
+				<div class="row">
+				<div class="form-group col-md-6"
+					th:classappend="${#fields.hasErrors('image')}? 'has-error':''">
+					<label for="image">Image</label> 
+					<input id="image" class="form-control-file" th:field="*{image}" type="file"
+						required="required" />
+					<p class="error-message"
+						th:each="error : ${#fields.errors('image')}" th:text="${error}">Validation
+						error</p>
+				</div>
+				</div>
+				<div class-"form-row">
+				<div class="form-group" id="twocat">
+					<div id="cat" class="form-group col-md-6">
+						<label for="catagory" class="control-label">Catagory</label> <select
+							th:field="*{catagory}" class="form-control" style="text-transform: capitalize;">
+							<option th:each="categor: ${catagory}" style="text-transform: capitalize;"
+								th:value="${categor.getId()}"
+								th:text="${categor.getCatagoryName()}" />
+						</select>
+						<p class="error-message"
+							th:each="error: ${#fields.errors('price')}" th:text="${error}">Validation
+							error</p>
+					</div>
+					<div id="scat" class="form-group col-md-6">
+
+						<label for="subCatagory" class="control-label">Sub
+							category</label> <input list="subcat" name="subcatagory"
+							th:field="*{subCatagory.subCatagoryName}" class="form-control">
+						<datalist id="subcat">
+							<option class="form-control" th:each="categor: ${subcata}"
+								th:text="${categor.getSubCatagoryName()}" />
+						</datalist>
+						<p class="error-message"
+							th:each="error: ${#fields.errors('price')}" th:text="${error}">Validation
+							error</p>
+					</div>
+				</div>
+				</div>
+				<div class="form-group"
+					th:classappend="${#fields.hasErrors('description')}? 'has-error':''">
+					<label for="description" class="control-label">Description</label>
+					<textarea id="text" class="form-control" th:field="*{description}"
+						placeholder="Description" required="required"></textarea>
+					<p class="error-message"
+						th:each="error: ${#fields.errors('description')}"
+						th:text="${error}">Validation error</p>
+				</div>
+				
+				
+				
+				<div class="form-group">
+					<button id="sav" type="button" data-toggle='modal'
+						data-target='#myModal' class="btn btn-primary">Save</button>
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content" id="contents">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">
+										<i class="fa fa-fw fa-warning"></i>Save Food
+									</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<label>Do you want to save this food???</label>
+
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-primary">Save
+											food</button>
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+	<!----------------------------------END OF THE FOOD SAVING SECTION----------------------------------->
+
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" id="contents">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						<i class="fa fa-fw fa-warning"></i>Warning!!!
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<label th:text="${notSave}"></label>
+				</div>
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">ok</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="myModal3" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" id="contents">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						<i class="fa fa-fw fa-check-circle"></i>Successfull!!!
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<i class="fa fa-fw fa-check-circle fa-4x" id="warn"></i> <label
+						th:text="${afterSave}"></label>
+				</div>
+				<div class="modal-footer">
+
+					<a th:href="@{/restfood}"><button type="button"
+							class="btn btn-secondary">ok</button></a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+	<!------------------------------START OF THE FOOTER SECTION---------------------------------------->
+	<section id="footer">
+			<p>
+				<i class="fa fa-copyright"></i> 2021 Nepali Cravings Pvt. Ltd. All
+				Rights Reserved.
+			</p>
+	</section>
+	<!------------------------------END OF THE FOOTER SECTION------------------------------------>
+
+	<script th:if="${notSave}">
+		$(function() {
+			$('#myModal2').modal('show');
+		});
+	</script>
+	<script th:if="${afterSave}">
+		$(function() {
+			$('#myModal3').modal('show');
+		});
+	</script>
+
+
+
+
+</body>
+</html>

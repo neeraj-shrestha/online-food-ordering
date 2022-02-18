@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nepali Cravings</title>
+<link rel="stylesheet" href="/css/review.css">
+<link rel="stylesheet" href="/css/footer.css">
+<link rel="stylesheet" href="/css/newnav.css">
+
+<!------- Poppins Font ------->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;0,800;0,900;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.9/css/star-rating.min.css"
+	rel="stylesheet" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.9/js/star-rating.min.js"></script>
+<link rel="stylesheet"
+	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+
+<script type="text/javascript"
+	src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+</head>
+<body>
+	<!---------------------------START OF THE NAVIGATION BAR SECTION---------------------------->
+	<section id="nav-bar">
+		<div class="topnav" id="myTopnav">
+
+			<div id="lofo">
+				<a href="#"><img align="left" src="image/LOGO.png"></a>
+
+			</div>
+			<div id="newlists" class="newlist">
+				<div>
+					<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+						<i class="fa fa-bars"></i>
+					</a>
+				</div>
+				<div id="extranav">
+					<div class="navlist">
+						<a th:href="@{/restaurantindex}"><i class="fa fa-home"></i> Home</a> <a
+							th:href="@{/restorder}"><i
+							class="fa fa-fw fa-cart-arrow-down"></i> Orders</a> <a
+							th:href="@{/reviewsofrest}"><i
+							class="fa fa-fw fa-building"></i> Reviews</a> <a href=""
+							data-toggle="collapse" data-target="#list" id="lists"> <img
+							th:src="@{/restaurant/{id}(id=${restaurant.id})}"><i
+							class="fa fa-caret-down fa-2x"></i></a>
+					</div>
+					<div id="mai" align="right">
+						<ul id="list" class="collapse">
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/restProfile}"><i class="fa fa-fw fa-user"></i> Profile</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Log
+									out</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!---------------------------END OF THE NAVIGATION BAR SECTION---------------------------->
+	<section style=" display: flex; justify-content: center; align-items: center; flex-direction: column; width: 100%; font-family: poppins; margin-top: 100px;" id="rests">
+  <h1 style="font-size: 2.2rem; font-weight: 500; background-color: black; color: white; padding: 10px 20px;">REVIEWS</h1>
+		<div th:each="rev:${reviewsbyuser}" id="mainrev">
+			<div>
+				<img th:src="@{/user/{id}(id=${rev.user.getId()})}">
+			</div>
+			<div id="reviewpart">
+				<label>User email:</label> <label style="text-transform: lowercase; font-size: medium;" th:text="${rev.user.getEmail()}"></label><br>
+				 <label>Rating: </label><input
+					th:value="${rev.stars}" class="rating" readonly>
+				<label>Comment: </label> <label style="font-size: medium;" th:text="${rev.review}" readonly></label>
+			</div>
+		</div>
+	</section>
+	
+	<!------------------------------START OF THE FOOTER SECTION---------------------------------------->
+	<section id="footer">
+			<p>
+				<i class="fa fa-copyright"></i> 2021 Nepali Cravings Pvt. Ltd. All
+				Rights Reserved.
+			</p>
+	</section>
+	<!------------------------------END OF THE FOOTER SECTION------------------------------------>
+	<script>
+		function myFunction() {
+			var x = document.getElementById("myTopnav");
+			var s = document.getElementById("newlists");
+			if (s.className === "newlist") {
+				s.className += " responsive";
+
+			} else {
+				x.className = "topnav";
+				s.className = "newlist"
+			}
+		}
+	</script>
+</body>
+</html>
